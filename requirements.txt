@@ -1,0 +1,4 @@
+tensorflow==2.14.0  # Replace with your required version
+pillow==10.0.1      # For image loading and manipulation
+numpy==1.24.3       # For numerical operations
+flask==2.3.3        # If you're using Flask for your API
