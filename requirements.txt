@@ -4,3 +4,4 @@ numpy==1.24.3       # For numerical operations
 flask==2.3.3        # If you're using Flask for your API
 uvicorn==0.23.2  # Use the latest compatible version
 fastapi==0.103.1  # Use the latest compatible version
+torch==2.0.1+cpu  # Adjust the version according to your needs
