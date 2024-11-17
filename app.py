@@ -13,7 +13,7 @@ model = None
 try:
     import tensorflow as tf
 
-    model_path = "food_recognition_model"
+    model_path = "food_recognition_model.h5"
     if os.path.exists(model_path):
         model = tf.keras.models.load_model(model_path)
         print("Model loaded successfully")
