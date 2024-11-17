@@ -7,19 +7,22 @@ import numpy as np
 
 app = FastAPI()
 
+# Initialize model as None
+model = None
+
 try:
     import tensorflow as tf
 
     model_path = "food_recognition_model"
-    if not os.path.exists(model_path):
-        raise RuntimeError(f"Model not found at {model_path}")
-    model = tf.keras.models.load_model(model_path)
+    if os.path.exists(model_path):
+        model = tf.keras.models.load_model(model_path)
+        print("Model loaded successfully")
+    else:
+        print(f"Model not found at {model_path}")
 except ImportError:
     print("TensorFlow import failed. Running in limited mode.")
-    model = None
 except Exception as e:
     print(f"Error loading model: {str(e)}")
-    model = None
 
 
 @app.post("/predict")
@@ -28,7 +31,8 @@ async def predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Model not available")
 
     try:
-        image = Image.open(io.BytesIO(await file.read()))
+        contents = await file.read()
+        image = Image.open(io.BytesIO(contents))
         image = image.resize((224, 224))
         image_array = np.array(image) / 255.0
         image_array = np.expand_dims(image_array, axis=0)
