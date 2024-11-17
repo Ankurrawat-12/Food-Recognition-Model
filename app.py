@@ -51,4 +51,10 @@ async def predict(file: UploadFile = File(...)):
 
 @app.get("/")
 async def root():
-    return {"message": "Food Recognition API is running", "model_loaded": model is not None}
+    if model is None:
+        return {
+            "message": "Food Recognition API is running, but model failed to load",
+            "model_loaded": False,
+            "error": "Check server logs for details"
+        }
+    return {"message": "Food Recognition API is running", "model_loaded": True}
